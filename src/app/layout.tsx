@@ -11,6 +11,9 @@ export const metadata = {
   title: "3DIMLI - Digital Commerce Platform",
   description:
     "All-in-one platform to buy and sell 3D models, E-books, and digital assets.",
+  icons: {
+    icon: "https://media.cgvizstudio.com/cg-viz-media/images/3DIMLI%20Images/Logo/3DIMLI%20Favicon.svg",
+  },
 };
 
 export default function RootLayout({
