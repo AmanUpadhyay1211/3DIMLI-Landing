@@ -73,19 +73,20 @@ export default function HeroSection() {
     });
 
     // Scroll-based animation for HoverCards (bubbles)
+    // Positioned to form a bubble around the text without overlapping
     const bubblePositions = [
-      { x: -450, y: -350 },
-      { x: 350, y: -330 },
-      { x: -280, y: -50 },
-      { x: 250, y: -50 },
-      { x: -300, y: 70 },
-      { x: 400, y: -200 },
-      { x: -200, y: 150 },
-      { x: 300, y: 100 },
-      { x: -350, y: -100 },
-      { x: 100, y: -250 },
-      { x: -150, y: 200 },
-      { x: 200, y: -150 },
+      { x: -380, y: -450 }, // Top-left (move higher & wider)
+      { x: 380, y: -450 },  // Top-right
+      { x: -320, y: -320 }, // Upper-mid left
+      { x: 320, y: -320 },  // Upper-mid right
+      { x: -260, y: 60 },   // Bottom-left
+      { x: 260, y: 60 },    // Bottom-right
+      { x: -190, y: -270 }, // Left-center
+      { x: 190, y: -270 },  // Right-center
+      { x: -480, y: -120 }, // Far-left
+      { x: 480, y: -120 },  // Far-right
+      { x: 0, y: -430 },    // Top-center
+      { x: 0, y: 200 },     // Bottom-center
     ];
 
     bubbleRefs.current.forEach((bubble, i) => {
@@ -93,7 +94,7 @@ export default function HeroSection() {
         const startX = bubblePositions[i % bubblePositions.length].x;
         const startY = bubblePositions[i % bubblePositions.length].y;
 
-        gsap.set(bubble, { x: startX, y: startY });
+        gsap.set(bubble, { x: startX, y: startY, opacity: 1, scale: 1 });
 
         gsap.to(bubble, {
           x: 0,
