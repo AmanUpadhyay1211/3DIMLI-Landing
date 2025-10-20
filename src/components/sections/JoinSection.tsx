@@ -31,31 +31,60 @@ const avatars = [
   },
 ];
 
+// Messages corresponding to each avatar bubble (left/right alternate is preserved by existing styles)
+const messages = [
+  "Have you seen this?",
+  "Give me a sec",
+  "Yeah, it's interestin...",
+  "Looks nice!",
+  "I wanna try too",
+];
+
 export default function JoinSection() {
   const [activeTab, setActiveTab] = useState<"join" | "faq">("join");
   const containerRef = useRef<HTMLDivElement>(null);
   const avatarRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const messageRefs = useRef<(HTMLParagraphElement | null)[]>([]);
 
   useEffect(() => {
     if (activeTab !== "join") return;
 
+    // Typing configuration: fast enough to finish before the next bubble shows
+    const secondsPerChar = 0.03; // ~33 chars/sec
+    const minDuration = 0.35; // ensure very short messages still look typed
+
     gsap.utils.toArray(avatarRefs.current).forEach((el, i) => {
-      if (el) {
-        gsap.fromTo(
-          el as HTMLElement,
-          { opacity: 0, y: 20 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            delay: i * 0.15,
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
-            },
+      if (!el) return;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el as HTMLElement,
+          start: "top 85%",
+          once: true,
+        },
+      });
+
+      // 1) Reveal bubble smoothly
+      tl.fromTo(
+        el as HTMLElement,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" },
+      );
+
+      // 2) Type the text into the paragraph after bubble is visible
+      const targetP = messageRefs.current[i];
+      if (targetP) {
+        const full = messages[i] ?? "";
+        targetP.textContent = "";
+        const proxy = { value: 0 };
+        tl.to(proxy, {
+          value: full.length,
+          duration: Math.max(full.length * secondsPerChar, minDuration),
+          ease: "none",
+          onUpdate: () => {
+            targetP.textContent = full.substring(0, Math.round(proxy.value));
           },
-        );
+        });
       }
     });
 
@@ -147,7 +176,15 @@ export default function JoinSection() {
                           }}
                         >
                           <div className="w-full h-[30px] sm:h-[36px] md:h-[42px] lg:h-[48px] overflow-hidden">
-                            <p className="text-[16px] sm:text-[20px] md:text-[24px] lg:text-[30px] font-medium font-inter leading-[30px] sm:leading-[36px] md:leading-[42px] lg:leading-[48px] text-white text-center whitespace-nowrap overflow-hidden text-ellipsis"></p>
+                            <p
+                              ref={(el) => {
+                                messageRefs.current[i] = el;
+                              }}
+                              aria-label={messages[i]}
+                              className="text-[16px] sm:text-[20px] md:text-[24px] lg:text-[30px] font-medium font-inter leading-[30px] sm:leading-[36px] md:leading-[42px] lg:leading-[48px] text-white text-center whitespace-nowrap overflow-hidden text-ellipsis"
+                            >
+                              {/* text is set via GSAP typing timeline */}
+                            </p>
                           </div>
                         </div>
                         {(avatar.alt.includes("2") ||
