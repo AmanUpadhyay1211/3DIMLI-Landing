@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { HoverCard } from "../ui/HoverCard";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ScrollTrigger, ScrollSmoother } from "gsap/all";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function HeroSection() {
   const sentences = [
@@ -25,7 +25,7 @@ export default function HeroSection() {
   const bubbleRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useGSAP(() => {
-    gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+    gsap.registerPlugin(ScrollTrigger);
 
     // Create ScrollSmoother
     // const smoother = ScrollSmoother.create({
@@ -305,7 +305,7 @@ export default function HeroSection() {
 // import { HoverCard } from "../ui/HoverCard";
 // import { useGSAP } from "@gsap/react";
 // import gsap from "gsap";
-// import { ScrollTrigger, ScrollSmoother } from "gsap/all";
+// import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // export default function HeroSection() {
 //   const sentences = [
@@ -326,7 +326,7 @@ export default function HeroSection() {
 //   const bubbleRefs = useRef([]);
 
 //   useGSAP(() => {
-//     gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+//     gsap.registerPlugin(ScrollTrigger);
 
 //     // Create ScrollSmoother
 //     // const smoother = ScrollSmoother.create({
