@@ -75,18 +75,18 @@ export default function HeroSection() {
     // Scroll-based animation for HoverCards (bubbles)
     // Positioned to form a bubble around the text without overlapping
     const bubblePositions = [
-      { x: -380, y: -450 }, // Top-left (move higher & wider)
-      { x: 380, y: -450 },  // Top-right
-      { x: -320, y: -320 }, // Upper-mid left
-      { x: 320, y: -320 },  // Upper-mid right
-      { x: -260, y: 60 },   // Bottom-left
-      { x: 260, y: 60 },    // Bottom-right
-      { x: -190, y: -270 }, // Left-center
-      { x: 190, y: -270 },  // Right-center
-      { x: -480, y: -120 }, // Far-left
-      { x: 480, y: -120 },  // Far-right
-      { x: 0, y: -430 },    // Top-center
-      { x: 0, y: 200 },     // Bottom-center
+      { x: -420, y: -450 }, // Top-left (move further left)
+      { x: 420, y: -450 },  // Top-right (move further right)
+      { x: -360, y: -320 }, // Upper-mid left (move further left)
+      { x: 360, y: -320 },  // Upper-mid right (move further right)
+      { x: -300, y: 60 },   // Bottom-left (move further left)
+      { x: 300, y: 60 },    // Bottom-right (move further right)
+      { x: -230, y: -270 }, // Left-center (move further left)
+      { x: 230, y: -270 },  // Right-center (move further right)
+      { x: -520, y: -120 }, // Far-left (move much further left)
+      { x: 520, y: -120 },  // Far-right (move much further right)
+      { x: -50, y: -430 },  // Top-center (slight left shift)
+      { x: -100, y: 200 },  // Bottom-center (move left)
     ];
 
     bubbleRefs.current.forEach((bubble, i) => {
